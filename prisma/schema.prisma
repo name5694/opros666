@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  id         String       @id @default(cuid())
+  question   String
+  type       String
+  answers    Answer[]
+  oprosId    String
+  opros      Opros        @relation(fields: [oprosId], references: [id]) // Define the reverse relation
+  userAnswer UserAnswer[]
+}
+
+model Answer {
+  id            String          @id @default(cuid())
+  answer        String
+  checked       Boolean         @default(false)
+  questionId    String
+  question      Question        @relation(fields: [questionId], references: [id])
+  userSubAnswer UserSubAnswer[]
+}
+
+model Opros {
+  id        String      @id @default(cuid())
+  resultId  String      @default(cuid())
+  name      String
+  questions Question[]
+  createdAt DateTime    @default(now())
+  userOpros UserOpros[]
+}
+
+model UserOpros {
+  id              String       @id @default(cuid())
+  templateOprosId String
+  templateOpros   Opros        @relation(fields: [templateOprosId], references: [id])
+  userAnswers     UserAnswer[]
+  createdAt       DateTime     @default(now())
+}
+
+model UserAnswer {
+  id             String          @id @default(cuid())
+  questionId     String
+  question       Question        @relation(fields: [questionId], references: [id])
+  userSubAnswers UserSubAnswer[]
+  userOpros      UserOpros       @relation(fields: [userOprosId], references: [id])
+  userOprosId    String
+}
+
+model UserSubAnswer {
+  id           String     @id @default(cuid())
+  answerId     String
+  answer       Answer     @relation(fields: [answerId], references: [id])
+  userAnswer   UserAnswer @relation(fields: [userAnswerId], references: [id])
+  userAnswerId String
+}
