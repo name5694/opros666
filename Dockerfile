@@ -6,7 +6,7 @@ WORKDIR /app
 # копируем указанные файлы в корень контейнера
 COPY package.json package-lock.json ./
 # устанавливаем зависимости
-RUN npm install
+RUN npm install --legacy-peer-deps
 # копируем остальные файлы в корень контейнера
 COPY . .
 # устанавливаем переменную
