@@ -34,7 +34,9 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const questionTemplates = opros.questions;
 
-  const rows = opros.userOpros.map((item) => item.userAnswers);
+  const rows = opros.userOpros.map(
+    (item: (typeof opros.userOpros)[0]) => item.userAnswers
+  );
 
   const someSit = rows.map((row) => {
     return row.map((col) => {
