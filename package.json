@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev",
+    "build": "npx prisma generate && next build",
+    "start": "npx prisma migrate deploy && next start",
+    "lint": "next lint",
+    "studio": "npx prisma studio"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
