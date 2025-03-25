@@ -16,5 +16,5 @@ export const Abob = async () => {
   });
   console.log(opros);
 
-  return <div>{opros.length}</div>;
+  return <div>{opros.length} опросов создано</div>;
 };
