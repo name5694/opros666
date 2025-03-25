@@ -117,7 +117,6 @@ limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;
 server {
     listen 80;
     server_name $DOMAIN_NAME;
-
     # Перенаправляем все запросы HTTP на HTTPS
     return 301 https://\$host\$request_uri;
 }
