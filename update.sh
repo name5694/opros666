@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Переменные окружения для скриптов
-REPO_URL="https://github.com/harryheman/self-host-nextjs.git"
+REPO_URL="https://github.com/name5694/opros666.git"
 APP_DIR=~/myapp
 
 # Извлекаем последние изменения из репозитория Git
