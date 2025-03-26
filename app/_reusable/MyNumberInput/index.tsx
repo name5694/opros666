@@ -31,6 +31,8 @@ const CustomNumberInput = React.forwardRef(
   }
 );
 
+CustomNumberInput.displayName = "CustomNumberInput";
+
 export default function MyNumberInput() {
   return (
     <div className="max-w-36 numberWrapper">

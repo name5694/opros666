@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   // Опционально: собственный обработчик кэша
   // cacheHandler: path.resolve('./cache-handler.mjs'),
   // cacheMaxMemorySize: 0, // отключаем дефолтное кэширование
+  reactStrictMode: false,
   images: {
     // Опционально: сторонний сервис оптимизации изображений
     // loader: 'custom',
