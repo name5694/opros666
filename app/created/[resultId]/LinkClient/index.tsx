@@ -4,14 +4,14 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-export const LinkClient: FC<{ id: string }> = ({ id }) => {
+export const LinkClient: FC<{ subLink: string }> = ({ subLink }) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const timerId = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [link, setLink] = useState("");
   useEffect(() => {
-    setLink(`${window.origin}/lets-go/${id}`);
-  }, [id]);
+    setLink(`${window.origin}/${subLink}`);
+  }, [subLink]);
   const onCopy = () => {
     navigator.clipboard.writeText(link);
     setTooltipOpen(true);

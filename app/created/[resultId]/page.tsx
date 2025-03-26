@@ -25,10 +25,10 @@ const Page = async ({ params }: { params: Promise<{ resultId: string }> }) => {
         создан!
       </h1>
       <p className="mt-4">Прохождение по ссылке:</p>
-      <LinkClient id={opros.id} />
+      <LinkClient subLink={`lets-go/${opros.id}`} />
 
       <p className="mt-4">Результаты по ссылке:</p>
-      <LinkClient id={opros.resultId} />
+      <LinkClient subLink={`result/${opros.resultId}`} />
     </div>
   );
 };
