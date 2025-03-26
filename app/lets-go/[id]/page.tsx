@@ -1,6 +1,7 @@
 import LetsGoOpros from "@/app/lets-go/[id]/LetsGoOpros";
 
 import { prisma } from "@/prisma/db";
+import { notFound } from "next/navigation";
 
 import React from "react";
 
@@ -22,7 +23,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   console.log(opros);
 
   if (!opros) {
-    return <p>Опрос не найден</p>;
+    notFound();
   }
   return (
     <div>

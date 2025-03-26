@@ -1,13 +1,10 @@
 import { LinkClient } from "@/app/created/[resultId]/LinkClient";
 import { prisma } from "@/prisma/db";
 import React from "react";
-import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 
 const Page = async ({ params }: { params: Promise<{ resultId: string }> }) => {
   const { resultId } = await params;
-  const headersList = await headers();
-  const referer = headersList.get("referer");
-  const origin = new URL(referer as string).origin;
   const opros = await prisma.opros.findFirst({
     where: {
       resultId,
@@ -15,7 +12,7 @@ const Page = async ({ params }: { params: Promise<{ resultId: string }> }) => {
   });
 
   if (!opros) {
-    return <p>Опрос не найден</p>;
+    notFound();
   }
 
   return (
@@ -28,10 +25,10 @@ const Page = async ({ params }: { params: Promise<{ resultId: string }> }) => {
         создан!
       </h1>
       <p className="mt-4">Прохождение по ссылке:</p>
-      <LinkClient link={`${origin}/lets-go/${opros.id}`} />
+      <LinkClient id={opros.id} />
 
       <p className="mt-4">Результаты по ссылке:</p>
-      <LinkClient link={`${origin}/result/${opros.resultId}`} />
+      <LinkClient id={opros.resultId} />
     </div>
   );
 };

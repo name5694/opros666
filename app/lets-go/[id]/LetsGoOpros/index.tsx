@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, useRef, useState } from "react";
-import { finishAnsweringSurvey } from "@/app/actions/actions";
+import { finishAnsweringSurvey } from "@/actions/actions";
 import LetsGoQuestion from "@/app/lets-go/[id]/LetsGoOpros/LetsGoQuestion";
 import { Alert, Button, Snackbar } from "@mui/joy";
 

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Button } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Roboto } from "next/font/google";
-import Link from "next/link";
+import Footer from "@/app/_reusable/Footer";
+import { Navigation } from "@/app/_reusable/Navigation";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -24,8 +24,8 @@ const roboto = Roboto({
 // });
 
 export const metadata: Metadata = {
-  title: "Opros666",
-  description: "lutiy Opros",
+  title: "Oprosru",
+  description: "Система опроса",
 };
 
 export default function RootLayout({
@@ -34,19 +34,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         className={`${roboto.variable} antialiased`}
       >
         <AppRouterCacheProvider>
-          <nav>
-            <Button variant="text">
-              <Link href="/">Opros666</Link>
-            </Button>
-          </nav>
-          <div className="container m-auto">
-            <div className="px-2">{children}</div>
+          <div className="flex flex-col min-h-screen">
+            <Navigation />
+            <div className="container m-auto flex-1">
+              <div className="px-2">{children}</div>
+            </div>
+            <Footer />
           </div>
         </AppRouterCacheProvider>
       </body>

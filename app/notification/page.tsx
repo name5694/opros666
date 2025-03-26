@@ -1,7 +1,7 @@
 import React from "react";
 
 const Page = () => {
-  return <div>Уведомление оплаты</div>;
+  return <div>Неуспешная оплата</div>;
 };
 
 export default Page;

@@ -1,6 +1,7 @@
 import { prisma } from "@/prisma/db";
 import { cn } from "@/utils";
 import { Checkbox, Radio } from "@mui/joy";
+import { notFound } from "next/navigation";
 import React from "react";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -29,7 +30,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   });
 
   if (!opros) {
-    return <p>Опрос не найден</p>;
+    notFound();
   }
 
   const questionTemplates = opros.questions;

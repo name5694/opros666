@@ -3,8 +3,8 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import { useState } from "react";
 import { Button } from "@mui/joy";
 import { QuestionCreate } from "./QuestionCreate";
-import { createSurvey } from "@/app/actions/actions";
-import { DebounceInput } from "@/reusable/debounce-input";
+import { createSurvey } from "@/actions/actions";
+import { DebounceInput } from "@/app/_reusable/debounce-input";
 
 export type QuestionType = "radio" | "checkbox";
 export interface IAnswer {
