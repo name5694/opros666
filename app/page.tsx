@@ -1,4 +1,5 @@
 import { Abob } from "@/app/abob";
+import Image from "next/image";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +15,13 @@ export default function Home() {
         frameBorder="0"
       ></iframe>
       <Abob />
+      <a href="https://freekassa.net" target="_blank" rel="noopener noreferrer">
+        <Image
+          alt="payment"
+          src="https://cdn.freekassa.net/banners/big-dark-1.png"
+          title="Прием платежей на сайте"
+        />
+      </a>
     </div>
   );
 }
