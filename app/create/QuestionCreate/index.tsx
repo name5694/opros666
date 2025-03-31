@@ -107,48 +107,51 @@ export const QuestionCreate: FC<{
                   changeAnswers(arr);
                 }}
                 debounceTimeout={300}
+                disabled={question.type === "text"}
               />
-              <div
-                onClick={(event) => {
-                  event.stopPropagation();
-                }}
-              >
-                <Dropdown>
-                  <MenuButton
-                    slots={{ root: IconButton }}
-                    slotProps={{
-                      root: { variant: "outlined", color: "neutral" },
-                    }}
-                    disabled={answers.length < 2}
-                  >
-                    <DeleteOutlineIcon />
-                  </MenuButton>
-                  <Menu>
-                    <MenuItem
-                      onClick={() => {
-                        if (selectedValue === index) setSelectedValue(null);
-                        if (selectedValue !== null && selectedValue > index)
-                          setSelectedValue(selectedValue - 1);
-                        const arr = [...answers];
-                        arr.splice(index, 1);
-                        changeAnswers(arr);
+              {question.type !== "text" && (
+                <div
+                  onClick={(event) => {
+                    event.stopPropagation();
+                  }}
+                >
+                  <Dropdown>
+                    <MenuButton
+                      slots={{ root: IconButton }}
+                      slotProps={{
+                        root: { variant: "outlined", color: "neutral" },
                       }}
+                      disabled={answers.length < 2}
                     >
-                      Удалить
-                    </MenuItem>
-                    <MenuItem>Отмена</MenuItem>
-                  </Menu>
-                </Dropdown>
-              </div>
+                      <DeleteOutlineIcon />
+                    </MenuButton>
+                    <Menu>
+                      <MenuItem
+                        onClick={() => {
+                          if (selectedValue === index) setSelectedValue(null);
+                          if (selectedValue !== null && selectedValue > index)
+                            setSelectedValue(selectedValue - 1);
+                          const arr = [...answers];
+                          arr.splice(index, 1);
+                          changeAnswers(arr);
+                        }}
+                      >
+                        Удалить
+                      </MenuItem>
+                      <MenuItem>Отмена</MenuItem>
+                    </Menu>
+                  </Dropdown>
+                </div>
+              )}
             </Sheet>
           );
         })}
       </RadioGroup>
-      {
+      {["radio", "checkbox"].includes(question.type) && (
         <Button sx={{ backgroundColor: "#c357a2", mt: 1 }} onClick={add}>
           Добавить ответ
         </Button>
-      }
+      )}
     </div>
   );
 };

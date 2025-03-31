@@ -62,6 +62,7 @@ model UserAnswer {
 model UserSubAnswer {
   id           String     @id @default(cuid())
   answerId     String
+  text         String?
   answer       Answer     @relation(fields: [answerId], references: [id])
   userAnswer   UserAnswer @relation(fields: [userAnswerId], references: [id])
   userAnswerId String

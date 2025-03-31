@@ -21,6 +21,7 @@ export const QuestionTypeSelect: FC<{
           value={type}
           onChange={handleChangeType}
         >
+          <MenuItem value={"text"}>Текст</MenuItem>
           <MenuItem value={"radio"}>Одиночный выбор</MenuItem>
           <MenuItem value={"checkbox"}>Множественный выбор</MenuItem>
         </Select>

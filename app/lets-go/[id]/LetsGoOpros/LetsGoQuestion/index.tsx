@@ -30,6 +30,7 @@ const LetsGoQuestion: FC<{
       return [
         ...prev.slice(0, questionIndex),
         {
+          ...prev[questionIndex],
           questionId,
           answers: new Set([answerId]),
         },
@@ -42,6 +43,7 @@ const LetsGoQuestion: FC<{
       const userAnswer = userAnswers[questionIndex] ?? {
         questionId,
         answers: new Set(),
+        type: "checkbox",
       };
       userAnswer.questionId = questionId;
       if (userAnswer.answers.has(answerId)) userAnswer.answers.delete(answerId);

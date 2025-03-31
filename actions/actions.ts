@@ -39,6 +39,7 @@ export async function finishAnsweringSurvey(oprosId: string, userAnswers: TUserA
           userSubAnswers: {
             create: Array.from(answers.answers).map(answer => ({
               answerId: answer,
+              text: answers.text
             }))
           }
         })),
