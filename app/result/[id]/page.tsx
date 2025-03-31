@@ -302,17 +302,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                                   key={i}
                                   className="flex items-center gap-2"
                                 >
-                                  <Checkbox
-                                    checked={item.checked}
-                                    variant="soft"
-                                  />
                                   <p
                                     className={cn(
                                       {
-                                        "bg-lime-300": item.right,
-                                        "bg-red-300": !item.right,
-                                        "bg-orange-300": !item.checked,
-                                        "bg-zinc-200": !item.countable,
+                                        "bg-zinc-200": true,
                                       },
                                       "p-1"
                                     )}
