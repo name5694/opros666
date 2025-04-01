@@ -44,6 +44,21 @@ const ContactPage = () => {
           Мы постараемся ответить на ваш запрос в течение 24 часов.
         </Typography>
 
+        {/* Добавление информации о продавце */}
+        <Typography level="body-md" sx={{ marginTop: 4 }}>
+          <noindex>
+            <span aria-hidden="true">
+              Продавец: Филонов Александр Александрович
+            </span>
+          </noindex>
+        </Typography>
+
+        <Typography level="body-md" sx={{ marginTop: 1 }}>
+          <noindex>
+            <span aria-hidden="true">ИНН: 212412732633</span>
+          </noindex>
+        </Typography>
+
         <Box sx={{ marginTop: 4 }}>
           <Button variant="solid">
             <Link href="/" passHref>

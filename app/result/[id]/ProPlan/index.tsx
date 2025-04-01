@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Typography, Divider, IconButton } from "@mui/joy";
+import { Typography, Divider, IconButton } from "@mui/joy";
 import { Star, StarBorder } from "@mui/icons-material";
 import { Download } from "@/app/result/[id]/ProPlan/Download";
+import { Pay } from "@/app/_reusable/Pay";
 
 export const ProPlan = ({ data }) => {
   const [clicked, setClicked] = useState(false);
@@ -37,21 +38,20 @@ export const ProPlan = ({ data }) => {
               fontWeight="lg"
               className="text-center"
             >
-              299 руб/мес
+              299 руб
             </Typography>
-            <Typography level="body-md" sx={{ mt: 1 }} className="text-center">
+            {/* <Typography level="body-md" sx={{ mt: 1 }} className="text-center">
               Возможность отмены в течение 7 дней.
-            </Typography>
+            </Typography> */}
           </div>
         )}
         <Divider />
+
         <div className="p-2 max-md:pb-0">
           {clicked ? (
             <Download data={data} />
           ) : (
-            <Button fullWidth onClick={() => setClicked(true)}>
-              Оформить Про версию
-            </Button>
+            <Pay onClick={() => setClicked(true)} />
           )}
         </div>
       </div>

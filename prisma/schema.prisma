@@ -67,3 +67,27 @@ model UserSubAnswer {
   userAnswer   UserAnswer @relation(fields: [userAnswerId], references: [id])
   userAnswerId String
 }
+
+model User {
+  id        Int       @id @default(autoincrement()) // уникальный ID пользователя
+  email     String    @unique // логин (например, email)
+  password  String // пароль (можно зашифрованный)
+  createdAt DateTime  @default(now()) // дата создания пользователя
+  updatedAt DateTime  @updatedAt // дата последнего обновления
+  payments  Payment[] // связь с таблицей оплат (один ко многим)
+}
+
+model Payment {
+  id                 Int       @id @default(autoincrement()) // уникальный ID оплаты
+  MNT_TRANSACTION_ID String    @unique
+  MNT_CURRENCY_CODE  String // Код валюты (MNT_CURRENCY_CODE)
+  MNT_AMOUNT         String // Сумма (MNT_AMOUNT)
+  MNT_TEST_MODE      String // Режим тестирования (MNT_TEST_MODE)
+  MNT_SUBSCRIBER_ID  String // Идентификатор подписчика (MNT_SUBSCRIBER_ID)
+  paid               Boolean   @default(false)
+  lifetime           Boolean   @default(false)
+  paidUntil          DateTime?
+  createdAt          DateTime  @default(now()) // дата создания
+  userId             Int // внешний ключ на пользователя
+  user               User      @relation(fields: [userId], references: [id]) // связь с таблицей пользователей
+}

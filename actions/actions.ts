@@ -49,3 +49,19 @@ export async function finishAnsweringSurvey(oprosId: string, userAnswers: TUserA
   console.log(survey);
   redirect("/finished");
 }
+
+export async function confirmPayment(MNT_TRANSACTION_ID: string) {
+  const paidUntil = new Date();
+  paidUntil.setDate(paidUntil.getDate() + 30);
+  // Если платеж найден, обновляем его статус или подтверждаем
+  const updatedPayment = await prisma.payment.update({
+    where: { MNT_TRANSACTION_ID },
+    data: {
+      MNT_TRANSACTION_ID,
+      paid: true,
+      paidUntil
+    },
+  });
+  console.log(updatedPayment);
+  return updatedPayment;
+}

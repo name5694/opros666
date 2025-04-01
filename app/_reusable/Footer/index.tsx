@@ -47,6 +47,9 @@ const Footer = () => {
           <Link href="/contacts" className="text-blue-500">
             Контакты
           </Link>
+          <Link href="/terms" className="text-blue-500">
+            Условия
+          </Link>
         </Box>
 
         <Typography level="body-md" textAlign="center">
