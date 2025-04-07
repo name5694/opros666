@@ -2,7 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import {
+  LoginLink,
+  LogoutLink,
+  RegisterLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { getUserSubscriptionInfo } from "@/actions/actions";
 
@@ -50,12 +54,10 @@ export const Navigation = () => {
             </div>
           ) : (
             <>
-              <Link
-                href="/register"
-                className="text-white hover:text-amber-300"
-              >
+              <RegisterLink className="text-white hover:text-amber-300">
                 Регистрация
-              </Link>
+              </RegisterLink>
+
               <LoginLink className="text-white hover:text-black bg-blue-500 px-4 py-2 rounded-md">
                 Войти
               </LoginLink>
