@@ -30,6 +30,18 @@ const nextConfig: NextConfig = {
   // Опционально: перезапись дефолтного заголовка `stale-while-revalidate`,
   // определяющего период актуальности статических страниц (по умолчанию 1 год)
   // swrDelta: 3600 // секунды
+  async headers() {
+    return [
+        {
+            source: "/:path*", // Match all routes
+            headers: [
+                { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, proxy-revalidate" },
+                { key: "Pragma", value: "no-cache" },
+                { key: "Expires", value: "0" },
+            ],
+        },
+    ];
+},
 };
 
 export default nextConfig;
