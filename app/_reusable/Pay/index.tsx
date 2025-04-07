@@ -98,7 +98,7 @@ export const Pay = ({ email, userId }) => {
       <input type="hidden" name="MNT_CUSTOM3" value={email} />
       {/* <input type="submit" value="Pay order" /> */}
       <Button fullWidth type="submit" onClick={onClick} id="buy-btn">
-        Купить Про версию
+        Оформить подписку
       </Button>
     </form>
   );

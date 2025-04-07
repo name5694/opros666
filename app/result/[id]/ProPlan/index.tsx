@@ -4,6 +4,7 @@ import { Star, StarBorder } from "@mui/icons-material";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { prisma } from "@/prisma/db";
 import { ButtonPlan } from "@/app/result/[id]/ProPlan/ButotnPlan";
+import { InfoBuy } from "@/app/_reusable/InfoBuy";
 
 export const ProPlan = async ({ data }) => {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -40,24 +41,7 @@ export const ProPlan = async ({ data }) => {
           </div>
         </div>
         <Divider />
-        {!clicked && (
-          <div className="py-4">
-            <Typography level="body-md" className="text-center">
-              Платный тариф позволяет выгружать результаты опроса в Excel файл.
-            </Typography>
-            <Typography
-              level="h2"
-              sx={{ mt: 2 }}
-              fontWeight="lg"
-              className="text-center"
-            >
-              299 руб
-            </Typography>
-            {/* <Typography level="body-md" sx={{ mt: 1 }} className="text-center">
-              Возможность отмены в течение 7 дней.
-            </Typography> */}
-          </div>
-        )}
+        <InfoBuy />
         <Divider />
 
         <div className="p-2 max-md:pb-0">
