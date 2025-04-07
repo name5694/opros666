@@ -4,8 +4,8 @@ import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Roboto } from "next/font/google";
 import Footer from "@/app/_reusable/Footer";
-import { Navigation } from "@/app/_reusable/Navigation";
 import { AuthProvider } from "@/app/_reusable/AuthProvider";
+import dynamic from "next/dynamic";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -29,6 +29,10 @@ export const metadata: Metadata = {
   description: "Система опроса",
 };
 
+const DynamicNavigation = dynamic(() => import("./_reusable/Navigation"), {
+  ssr: false,
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,7 +47,7 @@ export default function RootLayout({
         >
           <AppRouterCacheProvider>
             <div className="flex flex-col min-h-screen">
-              <Navigation />
+              <DynamicNavigation />
               <div className="container m-auto flex-1">
                 <div className="px-2">{children}</div>
               </div>

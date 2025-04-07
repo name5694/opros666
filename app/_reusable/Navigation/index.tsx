@@ -11,7 +11,7 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { getUserSubscriptionInfo } from "@/actions/actions";
 import { usePathname } from "next/navigation";
 
-export const Navigation = () => {
+const Navigation = () => {
   const { isAuthenticated, user } = useKindeBrowserClient();
   const [sub, setSub] = useState("");
   useEffect(() => {
@@ -61,11 +61,17 @@ export const Navigation = () => {
                 </div>
               ) : (
                 <>
-                  <RegisterLink className="text-white hover:text-amber-300">
+                  <RegisterLink
+                    className="text-white hover:text-amber-300"
+                    postLoginRedirectURL={window.location.href}
+                  >
                     Регистрация
                   </RegisterLink>
 
-                  <LoginLink className="text-white hover:text-black bg-blue-500 px-4 py-2 rounded-md">
+                  <LoginLink
+                    className="text-white hover:text-black bg-blue-500 px-4 py-2 rounded-md"
+                    postLoginRedirectURL={window.location.href}
+                  >
                     Войти
                   </LoginLink>
                 </>
@@ -77,3 +83,5 @@ export const Navigation = () => {
     </nav>
   );
 };
+
+export default Navigation;
