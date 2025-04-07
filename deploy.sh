@@ -17,12 +17,12 @@ APP_DIR=~/myapp
 SWAP_SIZE="1G"  # область подкачки в 1 Гб
 
 
-KINDE_CLIENT_ID=98f930f5007b4f81849738383769f7b0
-KINDE_CLIENT_SECRET=8ful0yAEwVqZMiGvSJdFeIAluTVqcChpmeX8UVnJA4znuKn64uC
-KINDE_ISSUER_URL=https://oprosru.kinde.com
-KINDE_SITE_URL=https://oprosru.ru
-KINDE_POST_LOGOUT_REDIRECT_URL=https://oprosru.ru
-KINDE_POST_LOGIN_REDIRECT_URL=https://oprosru.ru
+KINDE_CLIENT_ID="98f930f5007b4f81849738383769f7b0"
+KINDE_CLIENT_SECRET="8ful0yAEwVqZMiGvSJdFeIAluTVqcChpmeX8UVnJA4znuKn64uC"
+KINDE_ISSUER_URL="https://oprosru.kinde.com"
+KINDE_SITE_URL="https://oprosru.ru"
+KINDE_POST_LOGOUT_REDIRECT_URL="https://oprosru.ru"
+KINDE_POST_LOGIN_REDIRECT_URL="https://oprosru.ru"
 
 # Обновляем список пакетов и существующие пакеты
 sudo apt update && sudo apt upgrade -y
