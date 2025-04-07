@@ -15,10 +15,9 @@ export const ProPlan = async ({ data }) => {
       userId: user?.id,
     },
   });
-
-  const isPaid = payments.some(
-    (item) => item.lifetime || item.paidUntil > new Date()
-  );
+  const isPaid =
+    user &&
+    payments.some((item) => item.lifetime || item.paidUntil > new Date());
 
   const clicked = false;
   return (
