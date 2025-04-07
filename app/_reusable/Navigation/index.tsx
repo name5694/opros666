@@ -20,10 +20,12 @@ const Navigation = () => {
         if (result !== "no-pro") setSub(result);
       });
     }
+    setRedirectUrl(window.location.href);
   }, [user]);
 
   const pathname = usePathname();
   const isSurvey = pathname.startsWith("/lets-go");
+  const [redirectUrl, setRedirectUrl] = useState("/");
 
   return (
     <nav className="bg-gray-800 p-4 sticky z-[100] top-0">
@@ -57,7 +59,7 @@ const Navigation = () => {
 
                   <LogoutLink
                     className="text-white hover:text-black bg-red-500 px-4 py-2 rounded-md"
-                    postLogoutRedirectURL={window.location.href}
+                    postLogoutRedirectURL={redirectUrl}
                   >
                     Выйти
                   </LogoutLink>
@@ -66,14 +68,14 @@ const Navigation = () => {
                 <>
                   <RegisterLink
                     className="text-white hover:text-amber-300"
-                    postLoginRedirectURL={window.location.href}
+                    postLoginRedirectURL={redirectUrl}
                   >
                     Регистрация
                   </RegisterLink>
 
                   <LoginLink
                     className="text-white hover:text-black bg-blue-500 px-4 py-2 rounded-md"
-                    postLoginRedirectURL={window.location.href}
+                    postLoginRedirectURL={redirectUrl}
                   >
                     Войти
                   </LoginLink>
