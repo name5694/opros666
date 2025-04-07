@@ -42,7 +42,7 @@ const Navigation = () => {
             Контакты
           </Link> */}
           {!isSurvey && (
-            <div>
+            <div className="space-x-6">
               {isAuthenticated ? (
                 <div className="flex items-center gap-10">
                   {sub && (
@@ -55,7 +55,10 @@ const Navigation = () => {
                   )}
                   <span className="text-white mr-2">{user.email}</span>
 
-                  <LogoutLink className="text-white hover:text-black bg-red-500 px-4 py-2 rounded-md">
+                  <LogoutLink
+                    className="text-white hover:text-black bg-red-500 px-4 py-2 rounded-md"
+                    postLogoutRedirectURL={window.location.href}
+                  >
                     Выйти
                   </LogoutLink>
                 </div>

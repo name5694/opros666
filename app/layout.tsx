@@ -5,7 +5,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Roboto } from "next/font/google";
 import Footer from "@/app/_reusable/Footer";
 import { AuthProvider } from "@/app/_reusable/AuthProvider";
-import dynamic from "next/dynamic";
+import { DynamicNavigation } from "@/app/_reusable/DynamicNavigation";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -28,10 +28,6 @@ export const metadata: Metadata = {
   title: "Oprosru",
   description: "Система опроса",
 };
-
-const DynamicNavigation = dynamic(() => import("./_reusable/Navigation"), {
-  ssr: false,
-});
 
 export default function RootLayout({
   children,

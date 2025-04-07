@@ -16,6 +16,14 @@ REPO_URL="https://github.com/name5694/opros666.git" # необходимо за�
 APP_DIR=~/myapp
 SWAP_SIZE="1G"  # область подкачки в 1 Гб
 
+
+KINDE_CLIENT_ID=98f930f5007b4f81849738383769f7b0
+KINDE_CLIENT_SECRET=8ful0yAEwVqZMiGvSJdFeIAluTVqcChpmeX8UVnJA4znuKn64uC
+KINDE_ISSUER_URL=https://oprosru.kinde.com
+KINDE_SITE_URL=https://oprosru.ru
+KINDE_POST_LOGOUT_REDIRECT_URL=https://oprosru.ru
+KINDE_POST_LOGIN_REDIRECT_URL=https://oprosru.ru
+
 # Обновляем список пакетов и существующие пакеты
 sudo apt update && sudo apt upgrade -y
 
@@ -85,6 +93,13 @@ echo "DATABASE_URL=$DATABASE_URL" >> "$APP_DIR/.env"
 # Переменные для демонстрации
 echo "SECRET_KEY=$SECRET_KEY" >> "$APP_DIR/.env"
 echo "NEXT_PUBLIC_SAFE_KEY=$NEXT_PUBLIC_SAFE_KEY" >> "$APP_DIR/.env"
+
+echo "KINDE_CLIENT_ID=$KINDE_CLIENT_ID" > "$APP_DIR/.env"
+echo "KINDE_CLIENT_SECRET=$KINDE_CLIENT_SECRET" >> "$APP_DIR/.env"
+echo "KINDE_ISSUER_URL=$KINDE_ISSUER_URL" >> "$APP_DIR/.env"
+echo "KINDE_SITE_URL=$KINDE_SITE_URL" >> "$APP_DIR/.env"
+echo "KINDE_POST_LOGOUT_REDIRECT_URL=$KINDE_POST_LOGOUT_REDIRECT_URL" >> "$APP_DIR/.env"
+echo "KINDE_POST_LOGIN_REDIRECT_URL=$KINDE_POST_LOGIN_REDIRECT_URL" >> "$APP_DIR/.env"
 
 # Устанавливаем Nginx
 sudo apt install nginx -y
@@ -175,3 +190,9 @@ echo "Деплой завершен. Приложение Next.js и база д
 - DATABASE_URL
 - SECRET_KEY
 - NEXT_PUBLIC_SAFE_KEY"
+- KINDE_CLIENT_ID 
+- KINDE_CLIENT_SECRET 
+- KINDE_ISSUER_URL
+- KINDE_SITE_URL
+- KINDE_POST_LOGOUT_REDIRECT_URL
+- KINDE_POST_LOGIN_REDIRECT_URL
