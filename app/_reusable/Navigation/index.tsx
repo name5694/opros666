@@ -9,6 +9,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { getUserSubscriptionInfo } from "@/actions/actions";
+import { usePathname } from "next/navigation";
 
 export const Navigation = () => {
   const { isAuthenticated, user } = useKindeBrowserClient();
@@ -20,6 +21,9 @@ export const Navigation = () => {
       });
     }
   }, [user]);
+
+  const pathname = usePathname();
+  const isSurvey = pathname.startsWith("/lets-go");
 
   return (
     <nav className="bg-gray-800 p-4 sticky z-[100] top-0">
@@ -37,31 +41,36 @@ export const Navigation = () => {
           <Link href="/contact" className="text-white hover:text-gray-400">
             Контакты
           </Link> */}
+          {!isSurvey && (
+            <div>
+              {isAuthenticated ? (
+                <div className="flex items-center gap-10">
+                  {sub && (
+                    <div>
+                      <p className="text-yellow-400 text-center font-bold">
+                        PRO
+                      </p>
+                      <p className="text-zinc-300 text-center">{sub}</p>
+                    </div>
+                  )}
+                  <span className="text-white mr-2">{user.email}</span>
 
-          {isAuthenticated ? (
-            <div className="flex items-center gap-10">
-              {sub && (
-                <div>
-                  <p className="text-yellow-400 text-center font-bold">PRO</p>
-                  <p className="text-zinc-300 text-center">{sub}</p>
+                  <LogoutLink className="text-white hover:text-black bg-red-500 px-4 py-2 rounded-md">
+                    Выйти
+                  </LogoutLink>
                 </div>
+              ) : (
+                <>
+                  <RegisterLink className="text-white hover:text-amber-300">
+                    Регистрация
+                  </RegisterLink>
+
+                  <LoginLink className="text-white hover:text-black bg-blue-500 px-4 py-2 rounded-md">
+                    Войти
+                  </LoginLink>
+                </>
               )}
-              <span className="text-white mr-2">{user.email}</span>
-
-              <LogoutLink className="text-white hover:text-black bg-red-500 px-4 py-2 rounded-md">
-                Выйти
-              </LogoutLink>
             </div>
-          ) : (
-            <>
-              <RegisterLink className="text-white hover:text-amber-300">
-                Регистрация
-              </RegisterLink>
-
-              <LoginLink className="text-white hover:text-black bg-blue-500 px-4 py-2 rounded-md">
-                Войти
-              </LoginLink>
-            </>
           )}
         </div>
       </div>
