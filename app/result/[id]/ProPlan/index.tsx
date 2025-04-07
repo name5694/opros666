@@ -1,12 +1,25 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import { Typography, Divider, IconButton } from "@mui/joy";
 import { Star, StarBorder } from "@mui/icons-material";
-import { Download } from "@/app/result/[id]/ProPlan/Download";
-import { Pay } from "@/app/_reusable/Pay";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { prisma } from "@/prisma/db";
+import { ButtonPlan } from "@/app/result/[id]/ProPlan/ButotnPlan";
 
-export const ProPlan = ({ data }) => {
-  const [clicked, setClicked] = useState(false);
+export const ProPlan = async ({ data }) => {
+  const { isAuthenticated, getUser } = getKindeServerSession();
+  const isUserAuthenticated = await isAuthenticated();
+  const user = await getUser();
+  const payments = await prisma.payment.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  const isPaid = payments.some(
+    (item) => item.lifetime || item.paidUntil > new Date()
+  );
+
+  const clicked = false;
   return (
     <div className="flex justify-center items-center py-10">
       <div className="max-w-[800px] flex max-md:flex-col ring-4 ring-slate-500 rounded-md items-center p-2">
@@ -48,11 +61,13 @@ export const ProPlan = ({ data }) => {
         <Divider />
 
         <div className="p-2 max-md:pb-0">
-          {clicked ? (
-            <Download data={data} />
-          ) : (
-            <Pay onClick={() => setClicked(true)} />
-          )}
+          <ButtonPlan
+            isPaid={isPaid}
+            isUserAuthenticated={isUserAuthenticated}
+            data={data}
+            email={user?.email}
+            userId={user?.id}
+          />
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Roboto } from "next/font/google";
 import Footer from "@/app/_reusable/Footer";
 import { Navigation } from "@/app/_reusable/Navigation";
+import { AuthProvider } from "@/app/_reusable/AuthProvider";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -34,21 +35,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
-      <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        className={`${roboto.variable} antialiased`}
-      >
-        <AppRouterCacheProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navigation />
-            <div className="container m-auto flex-1">
-              <div className="px-2">{children}</div>
+    <AuthProvider>
+      <html lang="ru">
+        <body
+          // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${roboto.variable} antialiased`}
+        >
+          <AppRouterCacheProvider>
+            <div className="flex flex-col min-h-screen">
+              <Navigation />
+              <div className="container m-auto flex-1">
+                <div className="px-2">{children}</div>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-        </AppRouterCacheProvider>
-      </body>
-    </html>
+          </AppRouterCacheProvider>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

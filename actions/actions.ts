@@ -29,7 +29,6 @@ export async function createSurvey(questions: IQuestion[], name: string) {
 }
 
 export async function finishAnsweringSurvey(oprosId: string, userAnswers: TUserAnswers) {
-  console.log(oprosId, userAnswers);
   const survey = await prisma.userOpros.create({
     data: {
       templateOprosId: oprosId,
@@ -46,22 +45,85 @@ export async function finishAnsweringSurvey(oprosId: string, userAnswers: TUserA
       }
     }
   });
-  console.log(survey);
   redirect("/finished");
 }
 
-export async function confirmPayment(MNT_TRANSACTION_ID: string) {
-  const paidUntil = new Date();
-  paidUntil.setDate(paidUntil.getDate() + 30);
-  // Если платеж найден, обновляем его статус или подтверждаем
-  const updatedPayment = await prisma.payment.update({
-    where: { MNT_TRANSACTION_ID },
+export async function createPayment({
+  MNT_TRANSACTION_ID,
+  MNT_CURRENCY_CODE,
+  MNT_AMOUNT,
+  MNT_TEST_MODE,
+  MNT_SUBSCRIBER_ID,
+  userId,
+  returnOprosId
+}) {
+  const payment = await prisma.payment.create({
     data: {
       MNT_TRANSACTION_ID,
-      paid: true,
-      paidUntil
+      MNT_CURRENCY_CODE,
+      MNT_AMOUNT,
+      MNT_TEST_MODE,
+      MNT_SUBSCRIBER_ID,
+      lifetime: false,
+      userId,
+      returnOprosId
     },
   });
-  console.log(updatedPayment);
-  return updatedPayment;
+  return payment;
+}
+
+export async function confirmPayment(MNT_TRANSACTION_ID: string) {
+    const payment = await prisma.payment.findUnique({
+      where: { MNT_TRANSACTION_ID },
+    });
+
+    // Если запись не найдена, генерируем ошибку
+    if (!payment) {
+      throw new Error(`Платеж с ID ${MNT_TRANSACTION_ID} не найден`);
+    }
+
+    // Если запись найдена, обновляем ее
+    const paidUntil = new Date();
+    paidUntil.setDate(paidUntil.getDate() + 30);
+    if (payment.lifetime) {
+      paidUntil.setFullYear(2999, 0, 1);
+    }    
+
+    const updatedPayment = await prisma.payment.update({
+      where: { MNT_TRANSACTION_ID },
+      data: {
+        paid: true,
+        paidUntil,
+      },
+    });
+
+    if (updatedPayment?.returnOprosId) {
+      // const surveys = prisma.opros.findMany({
+      //   where: userId
+      // });
+      redirect(`/result/${updatedPayment.returnOprosId}`);
+    }
+
+    return updatedPayment;
+
+}
+
+export async function getUserSubscriptionInfo(userId) {
+  const payments = await prisma.payment.findMany({
+    where: {
+      userId,
+      paid: true,
+    },
+    orderBy: {
+      paidUntil: "desc",
+    },
+    take: 1, // Берем только одну запись
+  });
+
+  const payment = payments[0];
+  if (!payment) return "no-pro";
+  if (payment.lifetime) return "Пожизненно";
+
+  return payment.paidUntil.toLocaleDateString("ru-RU");
+
 }

@@ -1,20 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { getUserSubscriptionInfo } from "@/actions/actions";
 
 export const Navigation = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // const handleLogin = () => {
-  //   // В реальной ситуации здесь будет логика авторизации
-  //   setIsAuthenticated(true);
-  // };
-
-  // const handleLogout = () => {
-  //   // В реальной ситуации здесь будет логика выхода
-  //   setIsAuthenticated(false);
-  // };
+  const { isAuthenticated, user } = useKindeBrowserClient();
+  const [sub, setSub] = useState("");
+  useEffect(() => {
+    if (user) {
+      getUserSubscriptionInfo(user.id).then((result) => {
+        if (result !== "no-pro") setSub(result);
+      });
+    }
+  }, [user]);
 
   return (
     <nav className="bg-gray-800 p-4 sticky z-[100] top-0">
@@ -22,8 +23,8 @@ export const Navigation = () => {
         <div className="text-white text-2xl font-semibold">
           <Link href="/">OprosRU</Link>
         </div>
-        {/* <div className="space-x-6">
-          <Link href="/" className="text-white hover:text-gray-400">
+        <div className="space-x-6">
+          {/* <Link href="/" className="text-white hover:text-gray-400">
             Главная
           </Link>
           <Link href="/about" className="text-white hover:text-gray-400">
@@ -31,37 +32,36 @@ export const Navigation = () => {
           </Link>
           <Link href="/contact" className="text-white hover:text-gray-400">
             Контакты
-          </Link>
+          </Link> */}
 
           {isAuthenticated ? (
-            <>
-              <Link href="/profile" className="text-white hover:text-gray-400">
-                Профиль
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-white hover:text-gray-400 bg-red-500 px-4 py-2 rounded-md"
-              >
-                Выход
-              </button>
-            </>
+            <div className="flex items-center gap-10">
+              {sub && (
+                <div>
+                  <p className="text-yellow-400 text-center font-bold">PRO</p>
+                  <p className="text-zinc-300 text-center">{sub}</p>
+                </div>
+              )}
+              <span className="text-white mr-2">{user.email}</span>
+
+              <LogoutLink className="text-white hover:text-black bg-red-500 px-4 py-2 rounded-md">
+                Выйти
+              </LogoutLink>
+            </div>
           ) : (
             <>
-              <Link href="/login" className="text-white hover:text-gray-400">
-                Вход
-              </Link>
-              <Link href="/register" className="text-white hover:text-gray-400">
+              <Link
+                href="/register"
+                className="text-white hover:text-amber-300"
+              >
                 Регистрация
               </Link>
-              <button
-                onClick={handleLogin}
-                className="text-white hover:text-gray-400 bg-blue-500 px-4 py-2 rounded-md"
-              >
+              <LoginLink className="text-white hover:text-black bg-blue-500 px-4 py-2 rounded-md">
                 Войти
-              </button>
+              </LoginLink>
             </>
           )}
-        </div> */}
+        </div>
       </div>
     </nav>
   );

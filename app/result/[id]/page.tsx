@@ -1,3 +1,4 @@
+import { LinkClient } from "@/app/created/[resultId]/LinkClient";
 import { ProPlan } from "@/app/result/[id]/ProPlan";
 import { prisma } from "@/prisma/db";
 import { cn } from "@/utils";
@@ -38,7 +39,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const rows = opros.userOpros.map(
     (item: (typeof opros.userOpros)[0]) => item.userAnswers
   );
-  console.log(rows, questionTemplates);
 
   const someSit = rows.map((row) => {
     return row.map((col) => {
@@ -88,7 +88,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   });
 
   const rowsResult = someSit.map((row) => {
-    console.log(row);
     const max = row.filter((col) => {
       const notCountable = col.some((ans) => !ans.countable);
       return !notCountable;
@@ -108,6 +107,16 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div>
       <ProPlan data={someSit} />
+      <div className="mb-4">
+        <h1 className="leading-8 text-3xl">
+          Опрос{" "}
+          <span className="p-1 border-red-300 border rounded-md leading-3">
+            {opros.name}
+          </span>{" "}
+        </h1>
+        <p className="mt-2">Прохождение по ссылке:</p>
+        <LinkClient subLink={`lets-go/${opros.id}`} />
+      </div>
       <div className="flex flex-col space-y-4">
         <div className="flex">
           <div>

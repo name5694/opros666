@@ -68,15 +68,6 @@ model UserSubAnswer {
   userAnswerId String
 }
 
-model User {
-  id        Int       @id @default(autoincrement()) // уникальный ID пользователя
-  email     String    @unique // логин (например, email)
-  password  String // пароль (можно зашифрованный)
-  createdAt DateTime  @default(now()) // дата создания пользователя
-  updatedAt DateTime  @updatedAt // дата последнего обновления
-  payments  Payment[] // связь с таблицей оплат (один ко многим)
-}
-
 model Payment {
   id                 Int       @id @default(autoincrement()) // уникальный ID оплаты
   MNT_TRANSACTION_ID String    @unique
@@ -88,6 +79,6 @@ model Payment {
   lifetime           Boolean   @default(false)
   paidUntil          DateTime?
   createdAt          DateTime  @default(now()) // дата создания
-  userId             Int // внешний ключ на пользователя
-  user               User      @relation(fields: [userId], references: [id]) // связь с таблицей пользователей
+  userId             String // внешний ключ на пользователя
+  returnOprosId      String?
 }

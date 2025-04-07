@@ -20,7 +20,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       },
     },
   });
-  console.log(opros);
 
   if (!opros) {
     notFound();

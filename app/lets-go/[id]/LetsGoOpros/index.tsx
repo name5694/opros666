@@ -34,11 +34,9 @@ export type TUserAnswers = {
 }[];
 
 const LetsGoOpros: FC<{ opros: TOpros }> = ({ opros }) => {
-  console.log(opros);
   const [userAnswers, setUserAnswers] = useState<TUserAnswers>(
     new Array(opros.questions.length).fill(null).map((_, index) => {
       const question = opros.questions[index];
-      console.log(question);
       const type = question.type;
       const answers = new Set<string>();
       if (type === "text") {

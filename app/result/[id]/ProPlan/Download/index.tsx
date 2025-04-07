@@ -7,40 +7,35 @@ const xmlFacade = (data) => {
   const newData = data.map((row) => {
     const newRowObj = {};
 
-    console.log(
-      row.map((col, colIndex) => {
-        col.map((checkbox) => {
-          console.log(checkbox);
-          if (checkbox.type === "checkbox") {
-            const prevValue = newRowObj[`${colIndex + 1}.${checkbox.question}`];
-            if (prevValue) {
-              newRowObj[`${colIndex + 1}.${checkbox.question}`] =
-                `${prevValue}\n${
-                  checkbox.answer
-                }${checkbox.right ? "(Выбран верно)" : "(Выбран не верно)"}`;
-            } else {
-              newRowObj[`${colIndex + 1}.${checkbox.question}`] =
-                checkbox.answer +
-                (checkbox.right ? "(Выбран верно)" : "(Выбран не верно)");
-            }
-          } else if (checkbox.type === "radio") {
+    row.map((col, colIndex) => {
+      col.map((checkbox) => {
+        if (checkbox.type === "checkbox") {
+          const prevValue = newRowObj[`${colIndex + 1}.${checkbox.question}`];
+          if (prevValue) {
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] =
+              `${prevValue}\n${
+                checkbox.answer
+              }${checkbox.right ? "(Выбран верно)" : "(Выбран не верно)"}`;
+          } else {
             newRowObj[`${colIndex + 1}.${checkbox.question}`] =
               checkbox.answer +
               (checkbox.right ? "(Выбран верно)" : "(Выбран не верно)");
-          } else if (checkbox.type === "text") {
-            newRowObj[`${colIndex + 1}.${checkbox.question}`] = checkbox.text;
           }
-        });
-      })
-    );
+        } else if (checkbox.type === "radio") {
+          newRowObj[`${colIndex + 1}.${checkbox.question}`] =
+            checkbox.answer +
+            (checkbox.right ? "(Выбран верно)" : "(Выбран не верно)");
+        } else if (checkbox.type === "text") {
+          newRowObj[`${colIndex + 1}.${checkbox.question}`] = checkbox.text;
+        }
+      });
+    });
     return newRowObj;
   });
   return newData;
 };
 export const Download = ({ data }) => {
-  console.log(data);
   data = xmlFacade(data);
-  console.log(data);
   const onClick = () => {
     // const data = [
     //   { name: "Alice", chuka: 227, age: 25 },

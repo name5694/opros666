@@ -190,7 +190,6 @@ const Page = () => {
         }
       }
     }
-    console.log(questionsArr, oprosName);
     await createSurvey(questionsArr, oprosName);
   };
   const [loading, setLoading] = useState(false);
