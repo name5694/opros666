@@ -3,8 +3,13 @@ import { Typography, Divider, IconButton } from "@mui/joy";
 import { Star, StarBorder } from "@mui/icons-material";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { prisma } from "@/prisma/db";
-import { ButtonPlan } from "@/app/result/[id]/ProPlan/ButotnPlan";
 import { InfoBuy } from "@/app/_reusable/InfoBuy";
+import dynamic from "next/dynamic.js";
+
+export const DynamicButtonPlan = dynamic(() => import("./ButotnPlan"), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 
 export const ProPlan = async ({ data }) => {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -16,7 +21,7 @@ export const ProPlan = async ({ data }) => {
     },
   });
   const isPaid =
-    user &&
+    !!user &&
     payments.some((item) => item.lifetime || item.paidUntil > new Date());
 
   const clicked = false;
@@ -44,7 +49,7 @@ export const ProPlan = async ({ data }) => {
         <Divider />
 
         <div className="p-2 max-md:pb-0">
-          <ButtonPlan
+          <DynamicButtonPlan
             isPaid={isPaid}
             isUserAuthenticated={isUserAuthenticated}
             data={data}

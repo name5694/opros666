@@ -5,13 +5,7 @@ import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 import { Button } from "@mui/joy";
 import React from "react";
 
-export const ButtonPlan = ({
-  isPaid,
-  isUserAuthenticated,
-  data,
-  userId,
-  email,
-}) => {
+const ButtonPlan = ({ isPaid, isUserAuthenticated, data, userId, email }) => {
   return isPaid ? (
     <Download data={data} />
   ) : isUserAuthenticated ? (
@@ -22,3 +16,5 @@ export const ButtonPlan = ({
     </LoginLink>
   );
 };
+
+export default ButtonPlan;
