@@ -45,7 +45,7 @@ const ContactPage = () => {
         </Typography>
 
         {/* Добавление информации о продавце */}
-        <Typography level="body-md" sx={{ marginTop: 4 }}>
+        {/* <Typography level="body-md" sx={{ marginTop: 4 }}>
           <noindex>
             <span aria-hidden="true">
               Продавец: Филонов Александр Александрович
@@ -57,7 +57,7 @@ const ContactPage = () => {
           <noindex>
             <span aria-hidden="true">ИНН: 212412732633</span>
           </noindex>
-        </Typography>
+        </Typography> */}
 
         <Box sx={{ marginTop: 4 }}>
           <Button variant="solid">
