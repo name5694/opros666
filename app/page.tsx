@@ -1,9 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import {
-  RegisterLink,
-  LoginLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
 
 const HomePage = () => {
   return (
@@ -30,9 +26,6 @@ const HomePage = () => {
           </Link>
         </div>
       </section>
-      <LoginLink className="text-red-300">Sign in</LoginLink>
-      <RegisterLink>Sign up</RegisterLink>
-
       {/* О нас Section */}
       <section className="py-20 bg-gray-100">
         <div className="max-w-7xl mx-auto text-center">
