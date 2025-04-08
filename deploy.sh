@@ -107,6 +107,7 @@ sudo apt install nginx -y
 # Удаляем старые настройки Nginx (при наличии)
 sudo rm -f /etc/nginx/sites-available/myapp
 sudo rm -f /etc/nginx/sites-enabled/myapp
+sudo rm -f /etc/nginx/sites-enabled/default
 
 # Временно останавливаем Nginx для запуска Certbot в автономном режиме
 sudo systemctl stop nginx
