@@ -8,15 +8,11 @@ import { prisma } from "@/prisma/db";
 const HistoryPage = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const surveys =
-    user &&
-    (await prisma.opros.findMany({
-      where: {
-        creatorId: user?.id ?? null,
-      },
-    }));
-  // const surveys = [];
-  console.log(user, prisma);
+  const surveys = await prisma.opros.findMany({
+    where: {
+      creatorId: user?.id ?? null,
+    },
+  });
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", paddingTop: 8 }}>
