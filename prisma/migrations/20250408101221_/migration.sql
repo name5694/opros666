@@ -23,6 +23,7 @@ CREATE TABLE "Opros" (
     "id" TEXT NOT NULL,
     "resultId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "creatorId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Opros_pkey" PRIMARY KEY ("id")
@@ -50,10 +51,35 @@ CREATE TABLE "UserAnswer" (
 CREATE TABLE "UserSubAnswer" (
     "id" TEXT NOT NULL,
     "answerId" TEXT NOT NULL,
+    "text" TEXT,
     "userAnswerId" TEXT NOT NULL,
 
     CONSTRAINT "UserSubAnswer_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "Payment" (
+    "id" SERIAL NOT NULL,
+    "MNT_TRANSACTION_ID" TEXT NOT NULL,
+    "MNT_CURRENCY_CODE" TEXT NOT NULL,
+    "MNT_AMOUNT" TEXT NOT NULL,
+    "MNT_TEST_MODE" TEXT NOT NULL,
+    "MNT_SUBSCRIBER_ID" TEXT NOT NULL,
+    "paid" BOOLEAN NOT NULL DEFAULT false,
+    "lifetime" BOOLEAN NOT NULL DEFAULT false,
+    "paidUntil" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT NOT NULL,
+    "returnOprosId" TEXT,
+
+    CONSTRAINT "Payment_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Opros_resultId_key" ON "Opros"("resultId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Payment_MNT_TRANSACTION_ID_key" ON "Payment"("MNT_TRANSACTION_ID");
 
 -- AddForeignKey
 ALTER TABLE "Question" ADD CONSTRAINT "Question_oprosId_fkey" FOREIGN KEY ("oprosId") REFERENCES "Opros"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
