@@ -124,6 +124,6 @@ export async function getUserSubscriptionInfo(userId) {
   if (!payment) return "no-pro";
   if (payment.lifetime) return "Пожизненно";
 
-  return payment.paidUntil.toLocaleDateString("ru-RU");
+  return `До ${payment.paidUntil.toLocaleDateString("ru-RU")}`;
 
 }
