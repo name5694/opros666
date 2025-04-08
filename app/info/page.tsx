@@ -79,7 +79,7 @@ const About = () => {
         </Typography>
         <Button variant="solid" sx={{ marginTop: 2 }}>
           <Link
-            href="/create-survey"
+            href="/create"
             style={{ color: "inherit", textDecoration: "none" }}
           >
             Создать опрос
