@@ -8,9 +8,10 @@ import { prisma } from "@/prisma/db";
 const HistoryPage = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  console.log(user);
   const surveys = await prisma.opros.findMany({
     where: {
-      creatorId: user?.id ?? null,
+      creatorId: "user?.id ?? null",
     },
   });
 
