@@ -127,7 +127,7 @@ fi
 # Создаем настройки Nginx с обратным прокси, поддержкой SSL,
 # ограничением количества запросов и поддержкой потоковой передачи данных
 sudo cat > /etc/nginx/sites-available/myapp <<EOL
-limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;
+# limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=10r/s;
 
 server {
     listen 80;
@@ -146,7 +146,7 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     # Включаем ограничение количества запросов
-    limit_req zone=mylimit burst=20 nodelay;
+    # limit_req zone=mylimit burst=20 nodelay;
 
     location / {
         proxy_pass http://localhost:3000;
