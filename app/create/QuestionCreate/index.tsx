@@ -12,6 +12,7 @@ import { DebounceInput } from "@/app/_reusable/debounce-input";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { QuestionTypeSelect } from "@/app/create/QuestionCreate/QuestionTypeSelect";
 import { SelectChangeEvent } from "@mui/material";
+import { debounceInputTimeout } from "@/constants";
 
 export const QuestionCreate: FC<{
   question: IQuestion;
@@ -50,7 +51,7 @@ export const QuestionCreate: FC<{
         placeholder="Введите вопрос"
         defaultValue={question.question}
         handleDebounce={changeQuestionName}
-        debounceTimeout={300}
+        debounceTimeout={debounceInputTimeout}
       />
       <QuestionTypeSelect
         type={question.type}
@@ -106,7 +107,7 @@ export const QuestionCreate: FC<{
 
                   changeAnswers(arr);
                 }}
-                debounceTimeout={300}
+                debounceTimeout={debounceInputTimeout}
                 disabled={question.type === "text"}
               />
               {question.type !== "text" && (

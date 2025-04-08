@@ -1,0 +1,1 @@
+export const debounceInputTimeout = 600;

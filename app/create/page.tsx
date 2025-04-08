@@ -5,6 +5,7 @@ import { Alert, Button, Snackbar } from "@mui/joy";
 import { QuestionCreate } from "./QuestionCreate";
 import { createSurvey } from "@/actions/actions";
 import { DebounceInput } from "@/app/_reusable/debounce-input";
+import { debounceInputTimeout } from "@/constants";
 
 export type QuestionType = "radio" | "checkbox" | "text";
 export interface IAnswer {
@@ -208,7 +209,7 @@ const Page = () => {
         <DebounceInput
           placeholder="Название опроса"
           handleDebounce={changeOprosName}
-          debounceTimeout={300}
+          debounceTimeout={debounceInputTimeout}
         />
         {/* <MyNumberInput min={0} /> */}
         {questionsArr.map((item, index) => (
