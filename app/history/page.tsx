@@ -5,13 +5,14 @@ import Link from "next/link";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { prisma } from "@/prisma/db";
 
+export const dynamic = "force-dynamic";
+
 const HistoryPage = async () => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  console.log(user);
   const surveys = await prisma.opros.findMany({
     where: {
-      creatorId: "user?.id ?? null",
+      creatorId: user?.id,
     },
   });
 
