@@ -6,6 +6,7 @@ import { QuestionCreate } from "./QuestionCreate";
 import { createSurvey } from "@/actions/actions";
 import { DebounceInput } from "@/app/_reusable/debounce-input";
 import { debounceInputTimeout } from "@/constants";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 export type QuestionType = "radio" | "checkbox" | "text";
 export interface IAnswer {
@@ -21,6 +22,8 @@ export interface IQuestion {
 }
 
 const Page = () => {
+  const { user } = useKindeBrowserClient();
+
   const [questionsArr, setQestionsArr] = useState<IQuestion[]>([]);
   const [oprosName, setOprosName] = useState("");
 
@@ -191,7 +194,7 @@ const Page = () => {
         }
       }
     }
-    await createSurvey(questionsArr, oprosName);
+    await createSurvey(questionsArr, oprosName, user?.id);
   };
   const [loading, setLoading] = useState(false);
   const createOprosWrapper = () => {

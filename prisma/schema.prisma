@@ -35,8 +35,9 @@ model Answer {
 
 model Opros {
   id        String      @id @default(cuid())
-  resultId  String      @default(cuid())
+  resultId  String      @unique @default(cuid())
   name      String
+  creatorId String?
   questions Question[]
   createdAt DateTime    @default(now())
   userOpros UserOpros[]

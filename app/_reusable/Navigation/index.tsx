@@ -8,22 +8,32 @@ import {
   RegisterLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { getUserSubscriptionInfo } from "@/actions/actions";
+import {
+  getUserSubscriptionInfo,
+  updateOprosCreatorId,
+} from "@/actions/actions";
 import { usePathname } from "next/navigation";
 
 const Navigation = () => {
   const { isAuthenticated, user } = useKindeBrowserClient();
   const [sub, setSub] = useState("");
+  const pathname = usePathname();
   useEffect(() => {
     if (user) {
       getUserSubscriptionInfo(user.id).then((result) => {
         if (result !== "no-pro") setSub(result);
       });
+
+      const isCreatorPage = /^\/(created|result)\//.test(pathname);
+      if (isCreatorPage) {
+        const match = pathname.match(/^\/(created|result)\/([^\/]+)/);
+        const resultId = match ? match[2] : null;
+        updateOprosCreatorId(resultId, user.id);
+      }
     }
     setRedirectUrl(window.location.href);
-  }, [user]);
+  }, [user, pathname]);
 
-  const pathname = usePathname();
   const isSurvey = pathname.startsWith("/lets-go");
   const [redirectUrl, setRedirectUrl] = useState("/");
 
@@ -47,6 +57,12 @@ const Navigation = () => {
             <div className="space-x-6">
               {isAuthenticated ? (
                 <div className="flex items-center gap-10">
+                  <Link
+                    href={"/history"}
+                    className="hover:text-black bg-green-300 px-4 py-2 rounded-md cursor-pointer text-zinc-700"
+                  >
+                    Созданные опросы
+                  </Link>
                   {sub && (
                     <div>
                       <p className="text-yellow-400 text-center font-bold">

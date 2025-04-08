@@ -5,10 +5,11 @@ import { TUserAnswers } from "@/app/lets-go/[id]/LetsGoOpros";
 import { prisma } from "@/prisma/db";
 import { redirect } from "next/navigation";
 
-export async function createSurvey(questions: IQuestion[], name: string) {
+export async function createSurvey(questions: IQuestion[], name: string, creatorId?: string) {
   const survey = await prisma.opros.create({
     data: {
-      name, // Название опроса
+      name,
+      creatorId,
       questions: {
         create: questions.map(question => ({
           question: question.question,
@@ -29,7 +30,7 @@ export async function createSurvey(questions: IQuestion[], name: string) {
 }
 
 export async function finishAnsweringSurvey(oprosId: string, userAnswers: TUserAnswers) {
-  const survey = await prisma.userOpros.create({
+  await prisma.userOpros.create({
     data: {
       templateOprosId: oprosId,
       userAnswers: {
@@ -126,4 +127,28 @@ export async function getUserSubscriptionInfo(userId) {
 
   return `До ${payment.paidUntil.toLocaleDateString("ru-RU")}`;
 
+}
+
+export async function updateOprosCreatorId(resultId: string, newCreatorId: string) {
+  const opros = await prisma.opros.findUnique({
+    where: {
+      resultId,
+    },
+  });
+
+  // Если opros найден и creatorId не установлен, обновляем creatorId
+  if (opros && !opros.creatorId) {
+    const updatedOpros = await prisma.opros.update({
+      where: {
+        id: opros.id,
+      },
+      data: {
+        creatorId: newCreatorId,
+      },
+    });
+
+    return updatedOpros;
+  }
+
+  return opros; // Если creatorId уже установлен, просто возвращаем найденный opros
 }
