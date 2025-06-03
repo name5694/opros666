@@ -10,21 +10,43 @@ const xmlFacade = (data) => {
     row.map((col, colIndex) => {
       col.map((checkbox) => {
         if (checkbox.type === "checkbox") {
-          const prevValue = newRowObj[`${colIndex + 1}.${checkbox.question}`];
-          if (prevValue) {
-            newRowObj[`${colIndex + 1}.${checkbox.question}`] =
-              `${prevValue}\n${
-                checkbox.answer
-              }${checkbox.right ? "(Выбран верно)" : "(Выбран не верно)"}`;
-          } else {
-            newRowObj[`${colIndex + 1}.${checkbox.question}`] =
-              checkbox.answer +
-              (checkbox.right ? "(Выбран верно)" : "(Выбран не верно)");
+          const isIdealAnswer = !checkbox.checked && checkbox.right;
+          const isCheckedRight = checkbox.checked && checkbox.right;
+          const isCheckedFalsy = checkbox.checked && !checkbox.right;
+          const prevValue =
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] ?? "";
+          if (isIdealAnswer) {
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] = `${prevValue}${
+              checkbox.answer
+            } (Не выбранный верный ответ) `;
+          } else if (isCheckedRight) {
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] = `${prevValue}${
+              checkbox.answer
+            } (Выбран верный ответ) `;
+          } else if (isCheckedFalsy) {
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] = `${prevValue}${
+              checkbox.answer
+            } (Выбран неверный ответ) `;
           }
         } else if (checkbox.type === "radio") {
-          newRowObj[`${colIndex + 1}.${checkbox.question}`] =
-            checkbox.answer +
-            (checkbox.right ? "(Выбран верно)" : "(Выбран не верно)");
+          const isIdealAnswer = !checkbox.checked && checkbox.right;
+          const isCheckedRight = checkbox.checked && checkbox.right;
+          const isCheckedFalsy = checkbox.checked && !checkbox.right;
+          const prevValue =
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] ?? "";
+          if (isIdealAnswer) {
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] = `${prevValue}${
+              checkbox.answer
+            } (Не выбранный верный ответ) `;
+          } else if (isCheckedRight) {
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] = `${prevValue}${
+              checkbox.answer
+            } (Выбран верный ответ) `;
+          } else if (isCheckedFalsy) {
+            newRowObj[`${colIndex + 1}.${checkbox.question}`] = `${prevValue}${
+              checkbox.answer
+            } (Выбран неверный ответ) `;
+          }
         } else if (checkbox.type === "text") {
           newRowObj[`${colIndex + 1}.${checkbox.question}`] = checkbox.text;
         }
@@ -34,8 +56,8 @@ const xmlFacade = (data) => {
   });
   return newData;
 };
-export const Download = ({ data }) => {
-  data = xmlFacade(data);
+export const Download = ({ data: dataProp }) => {
+  const data = xmlFacade(dataProp);
   const onClick = () => {
     // const data = [
     //   { name: "Alice", chuka: 227, age: 25 },
@@ -44,7 +66,27 @@ export const Download = ({ data }) => {
     // ];
 
     // Преобразуем данные в лист Excel
+    const keys = Object.keys(data[0]);
+    const maxLengths = {};
+    for (const key of keys) {
+      maxLengths[key] = key.length + 1;
+    }
+    for (const item of data) {
+      for (const key of keys) {
+        if (!maxLengths[key] || maxLengths[key] < item[key].length) {
+          maxLengths[key] = item[key].length + 1;
+        }
+      }
+    }
+    const widthArr = [];
+    for (const key of keys) {
+      const index = +key.split(".")[0] - 1;
+      widthArr[index] = {
+        wch: maxLengths[key],
+      };
+    }
     const ws = XLSX.utils.json_to_sheet(data);
+    ws["!cols"] = widthArr;
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
