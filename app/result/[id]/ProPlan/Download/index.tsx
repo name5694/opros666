@@ -86,13 +86,13 @@ export const Download = ({ data: dataProp }) => {
       };
     }
     for (let i = 0; i < widthArr.length; i++) {
-      const length = widthArr[i];
+      const length = widthArr[i].wch;
       if (length < 10) {
-        widthArr[i] += 3;
+        widthArr[i].wch += 3;
       } else if (length < 20) {
-        widthArr[i] += 2;
+        widthArr[i].wch += 2;
       } else if (length < 50) {
-        widthArr[i] += 1;
+        widthArr[i].wch += 1;
       }
     }
     const ws = XLSX.utils.json_to_sheet(data);
